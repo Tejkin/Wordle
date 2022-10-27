@@ -1,23 +1,27 @@
 import random
 
+attempts = 0
+MAX_ATTEMPTS = 6
 ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Wordle-1/Wordle/word-bank/all_words.txt"
 TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Wordle-1/Wordle/word-bank/target_words.txt"
 
 # Start the game
 def start():
+    attempts = 0
     target_word = get_target_word()
     print(target_word)
-    guess_word = guess_input()
-    guess_letter = list(guess_word)
-    while True:
-        if check_valid_word(guess_word) == True:
-            break
-        else:
-            guess_word = guess_input()
-    score = score_guess(guess_word, target_word)
-    read_score(score, guess_letter)
-    
-    
+    while attempts < 6:
+        guess_word = guess_input()
+        target_letter = list(target_word)
+        while True:
+            if check_valid_word(guess_word) == True:
+                break
+            else:
+                guess_word = guess_input()
+        attempts = attempts + 1
+        is_correct(guess_word, target_word, attempts)
+        score = score_guess(guess_word, target_word)
+        read_score(score, target_letter)
 
 # Choosing Random Target Word
 def get_target_word():
@@ -42,22 +46,24 @@ def check_valid_word(guess_word):
         valid_words.append(words)
     if guess_word not in valid_words:
         print("This isnt a word")
-    else:
-        return True
-
-# Check for correct length input
-def check_length(guess_word):
-    if len(guess_word) == 5:
-        return True
-    else:
         return False
+    else:
+        return True
 
 # Check for correct guess
-def is_correct(guess_word, target_word):
+def is_correct(guess_word, target_word, attempts):
     if guess_word == target_word:
-        return True
+        if attempts == 1:
+            print("Congratul---... Wait! You got it in one attempt??")
+            quit()
+        elif attempts == 2:
+            print("Damn, I guess the word was too easy")
+            quit()
+        elif attempts >= 3:
+            print("Congratulations!! You did it in " + str(attempts) + " attemps!")
+            quit()
     else:
-        return False
+        return
 
 # Scores guess
 def score_guess(guess_word, target_word):
@@ -74,11 +80,14 @@ def score_guess(guess_word, target_word):
     return position
 
 # Change scores to be readable
-def read_score(score, guess_letter):
+def read_score(score, target_letter):
     for i in score:
         if i == 2:
             index = score.index(i)
-            score[index] = guess_letter[index]
+            score[index] = target_letter[index]
+        if i == 1:
+            index = score.index(i)
+            score[index] = "?"
         if i == 0:
             index = score.index(i)
             score[index] = "X"

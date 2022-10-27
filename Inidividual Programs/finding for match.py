@@ -37,8 +37,7 @@ while attempts < 6:
             print("Damn, I guess the word was too easy")
             quit()
         elif attempts >= 3:
-            attempts = str(attempts)
-            print("Congratulations!! You did it in " + attempts + " attemps!")
+            print("Congratulations!! You did it in " + str(attempts) + " attemps!")
             quit()
 
 print("Sorry ;( You ran out of attempts")
