@@ -11,7 +11,7 @@ def start():
     keys1 = list("QWERTYUIOP")
     keys2 = list("ASDFGHJKL")
     keys3 = list("ZXCVBNM")
-    guesses = ("_____")
+    display = list("_____")
     target_word = get_target_word()
     print(target_word)
     while attempts < 6:
@@ -26,7 +26,7 @@ def start():
         attempts = attempts + 1
         is_correct(guess_word, target_word, attempts)
         score = score_guess(guess_word, target_word)
-        read_score(score, target_letter, guess_letter)
+        read_score(score, target_letter, guess_letter, display)
 
 # Choosing Random Target Word
 def get_target_word():
@@ -85,13 +85,14 @@ def score_guess(guess_word, target_word):
     return position
 
 # Change scores to be readable
-def read_score(score, target_letter, guess_letter):
+def read_score(score, target_letter, guess_letter, display):
     for i in score:
         if i == 2:
             colour = Colours.GREEN
             index = score.index(i)
             score[index] = colour + target_letter[index] + Colours.END
             keyboard(colour, guess_letter[index])
+            display[index] = Colours.BOLD + Colours.GREEN + Colours.UNDERLINE + target_letter[index] + Colours.END
         if i == 1:
             colour = Colours.YELLOW
             index = score.index(i)
@@ -103,7 +104,9 @@ def read_score(score, target_letter, guess_letter):
             score[index] = colour + "X" + Colours.END
             keyboard(colour, guess_letter[index])
     print(' '.join(score))
+    print(' '.join(display))
     print_keyboard()
+    
 
 # Class holding colors
 class Colours:
@@ -111,6 +114,8 @@ class Colours:
     YELLOW = '\033[93m'
     RED = '\033[91m'
     END = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 # Lists holding keyboard letters
 
@@ -127,16 +132,17 @@ def print_keyboard():
 # Colour keyboard
 def keyboard(colour, letter):
     letter = letter.upper()
-    if letter in keys1:
-        index = keys1.index(letter)
-        keys1[index] = colour + letter + Colours.END
-    elif letter in keys2:
-        index = keys2.index(letter)
-        keys1[index] = colour + letter + Colours.END
-    elif letter in keys3:
-        index = keys3.index(letter)
-        keys1[index] = colour + letter + Colours.END
-    else:
-        return
+    while True:
+        if letter in keys1:
+            index = keys1.index(letter)
+            keys1[index] = colour + letter + Colours.END
+        elif letter in keys2:
+            index = keys2.index(letter)
+            keys2[index] = colour + letter + Colours.END
+        elif letter in keys3:
+            index = keys3.index(letter)
+            keys3[index] = colour + letter + Colours.END
+        else:
+            return
 
 start()
