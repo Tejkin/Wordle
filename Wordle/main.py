@@ -8,12 +8,15 @@ def start():
     target_word = get_target_word()
     print(target_word)
     guess_word = guess_input()
+    guess_letter = list(guess_word)
     while True:
         if check_valid_word(guess_word) == True:
             break
         else:
             guess_word = guess_input()
-    print(score_guess(guess_word, target_word))
+    score = score_guess(guess_word, target_word)
+    read_score(score, guess_letter)
+    
     
 
 # Choosing Random Target Word
@@ -55,7 +58,6 @@ def is_correct(guess_word, target_word):
         return True
     else:
         return False
-    
 
 # Scores guess
 def score_guess(guess_word, target_word):
@@ -72,5 +74,16 @@ def score_guess(guess_word, target_word):
     return position
 
 # Change scores to be readable
+def read_score(score, guess_letter):
+    for i in score:
+        if i == 2:
+            index = score.index(i)
+            score[index] = guess_letter[index]
+        if i == 0:
+            index = score.index(i)
+            score[index] = "X"
+    print(' '.join(score))
+
+        
 
 start()
