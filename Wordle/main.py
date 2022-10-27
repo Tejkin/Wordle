@@ -8,6 +8,10 @@ TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Wordle-1/Wordle/word-bank/target_
 # Start the game
 def start():
     attempts = 0
+    keys1 = list("QWERTYUIOP")
+    keys2 = list("ASDFGHJKL")
+    keys3 = list("ZXCVBNM")
+    guesses = ("_____")
     target_word = get_target_word()
     print(target_word)
     while attempts < 6:
@@ -84,15 +88,22 @@ def score_guess(guess_word, target_word):
 def read_score(score, target_letter, guess_letter):
     for i in score:
         if i == 2:
+            colour = Colours.GREEN
             index = score.index(i)
-            score[index] = Colours.GREEN + target_letter[index] + Colours.END
+            score[index] = colour + target_letter[index] + Colours.END
+            keyboard(colour, guess_letter[index])
         if i == 1:
+            colour = Colours.YELLOW
             index = score.index(i)
-            score[index] = Colours.YELLOW + guess_letter[index] + Colours.END
+            score[index] = colour + guess_letter[index] + Colours.END
+            keyboard(colour, guess_letter[index])
         if i == 0:
+            colour = Colours.RED
             index = score.index(i)
-            score[index] = Colours.RED + "X" + Colours.END
+            score[index] = colour + "X" + Colours.END
+            keyboard(colour, guess_letter[index])
     print(' '.join(score))
+    print_keyboard()
 
 # Class holding colors
 class Colours:
@@ -100,5 +111,32 @@ class Colours:
     YELLOW = '\033[93m'
     RED = '\033[91m'
     END = '\033[0m'
+
+# Lists holding keyboard letters
+
+keys1 = list("QWERTYUIOP")
+keys2 = list("ASDFGHJKL")
+keys3 = list("ZXCVBNM")
+
+# Print keyboard
+def print_keyboard():
+    print("   " + "  ".join(keys1))
+    print("     " + "  ".join(keys2))
+    print("\t" + "  ".join(keys3))
+
+# Colour keyboard
+def keyboard(colour, letter):
+    letter = letter.upper()
+    if letter in keys1:
+        index = keys1.index(letter)
+        keys1[index] = colour + letter + Colours.END
+    elif letter in keys2:
+        index = keys2.index(letter)
+        keys1[index] = colour + letter + Colours.END
+    elif letter in keys3:
+        index = keys3.index(letter)
+        keys1[index] = colour + letter + Colours.END
+    else:
+        return
 
 start()
