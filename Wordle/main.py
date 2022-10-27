@@ -1,6 +1,6 @@
 import random
 
-attempts = 0
+
 MAX_ATTEMPTS = 6
 ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Wordle-1/Wordle/word-bank/all_words.txt"
 TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Wordle-1/Wordle/word-bank/target_words.txt"
@@ -13,6 +13,7 @@ def start():
     while attempts < 6:
         guess_word = guess_input()
         target_letter = list(target_word)
+        guess_letter = list(guess_word)
         while True:
             if check_valid_word(guess_word) == True:
                 break
@@ -21,7 +22,7 @@ def start():
         attempts = attempts + 1
         is_correct(guess_word, target_word, attempts)
         score = score_guess(guess_word, target_word)
-        read_score(score, target_letter)
+        read_score(score, target_letter, guess_letter)
 
 # Choosing Random Target Word
 def get_target_word():
@@ -54,13 +55,13 @@ def check_valid_word(guess_word):
 def is_correct(guess_word, target_word, attempts):
     if guess_word == target_word:
         if attempts == 1:
-            print("Congratul---... Wait! You got it in one attempt??")
+            print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nCongratul---... Wait! You got it in one attempt??")
             quit()
         elif attempts == 2:
-            print("Damn, I guess the word was too easy")
+            print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nDamn, I guess the word was too easy")
             quit()
         elif attempts >= 3:
-            print("Congratulations!! You did it in " + str(attempts) + " attemps!")
+            print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nCongratulations!! You did it in " + str(attempts) + " attemps!")
             quit()
     else:
         return
@@ -80,19 +81,24 @@ def score_guess(guess_word, target_word):
     return position
 
 # Change scores to be readable
-def read_score(score, target_letter):
+def read_score(score, target_letter, guess_letter):
     for i in score:
         if i == 2:
             index = score.index(i)
-            score[index] = target_letter[index]
+            score[index] = Colours.GREEN + target_letter[index] + Colours.END
         if i == 1:
             index = score.index(i)
-            score[index] = "?"
+            score[index] = Colours.YELLOW + guess_letter[index] + Colours.END
         if i == 0:
             index = score.index(i)
-            score[index] = "X"
+            score[index] = Colours.RED + "X" + Colours.END
     print(' '.join(score))
 
-        
+# Class holding colors
+class Colours:
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    END = '\033[0m'
 
 start()
