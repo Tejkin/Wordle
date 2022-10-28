@@ -1,9 +1,11 @@
 import random
+from turtle import left
 
 
 MAX_ATTEMPTS = 6
-ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Wordle-1/Wordle/word-bank/all_words.txt"
-TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Wordle-1/Wordle/word-bank/target_words.txt"
+# \C:\Users\CHENTH\Documents\Python - Wordle\Wordle\Wordle\word-bank\all_words.txt
+ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/all_words.txt"
+TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/target_words.txt"
 
 # Start the game
 def start():
@@ -27,6 +29,8 @@ def start():
         is_correct(guess_word, target_word, attempts)
         score = score_guess(guess_word, target_word)
         read_score(score, target_letter, guess_letter, display)
+        attempts_left(attempts)
+        
 
 # Choosing Random Target Word
 def get_target_word():
@@ -62,7 +66,7 @@ def is_correct(guess_word, target_word, attempts):
             print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nCongratul---... Wait! You got it in one attempt??")
             quit()
         elif attempts == 2:
-            print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nDamn, I guess the word was too easy")
+            print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nNot bad, figuring out the word in 2 attempts.")
             quit()
         elif attempts >= 3:
             print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nCongratulations!! You did it in " + str(attempts) + " attemps!")
@@ -144,5 +148,16 @@ def keyboard(colour, letter):
             keys3[index] = colour + letter + Colours.END
         else:
             return
+
+# Print out attempts left
+def attempts_left(attempts):
+    attempts_left_over = MAX_ATTEMPTS - attempts
+    if attempts_left_over >= 3:
+        print("You have " + Colours.GREEN + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempts left")
+    if attempts_left_over == 2:
+        print("You have " + Colours.YELLOW + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempts left")
+    if attempts_left_over == 1:
+        print("You have " + Colours.RED + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempts left")
+
 
 start()
