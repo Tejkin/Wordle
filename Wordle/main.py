@@ -13,16 +13,16 @@ def start():
     keys3 = list("ZXCVBNM")
     display = list("_____")
     target_word = get_target_word()
-    print(target_word)
+    # print(target_word)
     while attempts < 6:
         guess_word = guess_input()
         target_letter = list(target_word)
-        guess_letter = list(guess_word)
         while True:
             if check_valid_word(guess_word) == True:
                 break
             else:
                 guess_word = guess_input()
+        guess_letter = list(guess_word)
         attempts = attempts + 1
         is_correct(guess_word, target_word, attempts)
         score = score_guess(guess_word, target_word)
@@ -152,9 +152,9 @@ def keyboard(colour, letter):
         elif letter in keys3:
             index = keys3.index(letter)
             if keys3[index].startswith(Colours.GREEN):
-                keys3[index] = colour + letter + Colours.END
-            else:
                 return
+            else:
+                keys3[index] = colour + letter + Colours.END
         else:
             return
 
@@ -166,7 +166,7 @@ def attempts_left(attempts):
     if attempts_left_over == 2:
         print("You have " + Colours.YELLOW + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempts left")
     if attempts_left_over == 1:
-        print("You have " + Colours.RED + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempts left")
+        print("You have " + Colours.RED + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempt left")
 
 
 start()
