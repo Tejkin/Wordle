@@ -30,6 +30,8 @@ def start():
         score = score_guess(guess_word, target_word)
         read_score(score, target_letter, guess_letter, display)
         attempts_left(attempts)
+    else:
+        print("You've failed, the word was: " + Colours.GREEN + target_word + Colours.END)
         
 
 # Choosing Random Target Word
