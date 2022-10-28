@@ -1,6 +1,4 @@
 import random
-from turtle import left
-
 
 MAX_ATTEMPTS = 6
 # \C:\Users\CHENTH\Documents\Python - Wordle\Wordle\Wordle\word-bank\all_words.txt
@@ -141,13 +139,22 @@ def keyboard(colour, letter):
     while True:
         if letter in keys1:
             index = keys1.index(letter)
-            keys1[index] = colour + letter + Colours.END
+            if keys1[index].startswith(Colours.GREEN):
+                return
+            else:
+                keys1[index] = colour + letter + Colours.END
         elif letter in keys2:
             index = keys2.index(letter)
-            keys2[index] = colour + letter + Colours.END
+            if keys2[index].startswith(Colours.GREEN):
+                return
+            else:
+                keys2[index] = colour + letter + Colours.END
         elif letter in keys3:
             index = keys3.index(letter)
-            keys3[index] = colour + letter + Colours.END
+            if keys3[index].startswith(Colours.GREEN):
+                keys3[index] = colour + letter + Colours.END
+            else:
+                return
         else:
             return
 
