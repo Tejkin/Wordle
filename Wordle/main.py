@@ -34,6 +34,7 @@ def play():
         attempts_left(attempts)
     else:
         print("You've failed, the word was: " + Colours.GREEN + target_word + Colours.END)
+    play_again()
         
 
 # Choosing Random Target Word
@@ -68,13 +69,13 @@ def is_correct(guess_word, target_word, attempts):
     if guess_word == target_word:
         if attempts == 1:
             print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nCongratul---... Wait! You got it in one attempt??")
-            quit()
+            play_again()
         elif attempts == 2:
             print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nNot bad, figuring out the word in 2 attempts.")
-            quit()
+            play_again()
         elif attempts >= 3:
             print("Correct word is: " + Colours.GREEN + target_word + Colours.END + "\nCongratulations!! You did it in " + str(attempts) + " attemps!")
-            quit()
+            play_again()
     else:
         return
 
@@ -198,5 +199,12 @@ def start():
                 print("The entered input is invalid or out of scope")
                 continue
 
+# User input to play again after finished game
+def play_again():
+    user_input = input("Would you like to start again?: Y/N \n")
+    if user_input.upper() == "Y":
+        start()
+    else:
+        exit()
 
 start()
