@@ -1,19 +1,23 @@
 import random
 
-MAX_ATTEMPTS = 6
-# \C:\Users\CHENTH\Documents\Python - Wordle\Wordle\Wordle\word-bank\all_words.txt
-ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/all_words.txt"
-TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/target_words.txt"
+# File Path
+# ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/all_words.txt"
+# TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/target_words.txt"
+ALL_WORDS_PATH = "/Users/thomas/Documents/GitHub/Wordle/Wordle/word-bank/all_words.txt"
+TARGET_WORDS_PATH = "/Users/thomas/Documents/GitHub/Wordle/Wordle/word-bank/target_words.txt"
 
-# Start the game
-def start():
+# Lists holding keyboard letters and display
+keys1 = list("QWERTYUIOP")
+keys2 = list("ASDFGHJKL")
+keys3 = list("ZXCVBNM")
+display = list("_____")
+
+# Play the game
+def play():
     attempts = 0
-    keys1 = list("QWERTYUIOP")
-    keys2 = list("ASDFGHJKL")
-    keys3 = list("ZXCVBNM")
-    display = list("_____")
     target_word = get_target_word()
-    # print(target_word)
+    if cheats == True:
+        print("The target word is: " + target_word)
     while attempts < 6:
         guess_word = guess_input()
         target_letter = list(target_word)
@@ -121,12 +125,6 @@ class Colours:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# Lists holding keyboard letters
-
-keys1 = list("QWERTYUIOP")
-keys2 = list("ASDFGHJKL")
-keys3 = list("ZXCVBNM")
-
 # Print keyboard
 def print_keyboard():
     print("   " + "  ".join(keys1))
@@ -162,11 +160,43 @@ def keyboard(colour, letter):
 def attempts_left(attempts):
     attempts_left_over = MAX_ATTEMPTS - attempts
     if attempts_left_over >= 3:
-        print("You have " + Colours.GREEN + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempts left")
+        print("You have " + Colours.GREEN + str(attempts_left_over) + Colours.END + " attempts left")
     if attempts_left_over == 2:
-        print("You have " + Colours.YELLOW + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempts left")
+        print("You have " + Colours.YELLOW + str(attempts_left_over) + Colours.END + " attempts left")
     if attempts_left_over == 1:
-        print("You have " + Colours.RED + str(MAX_ATTEMPTS - attempts) + Colours.END + " attempt left")
+        print("You have " + Colours.RED + str(attempts_left_over) + Colours.END + " attempt left")
+
+# Start asking for command input
+def start():  
+    global MAX_ATTEMPTS
+    MAX_ATTEMPTS = 6
+    global cheats
+    cheats = False
+    while True:
+        command_input = input("Would you lke to play Wordle? Y/N: ")
+        if command_input.upper() == "Y":
+            play()
+        if command_input.upper() == "N":
+            command_input = input("What would you like to do?\n1 - Change Max Attempts\n2 - Help\n3 - Toggle Answer Reveal: " + str(cheats) + "\n4 - Back\n5 - Exit\nPlease enter number corresponding to command: ")
+            if command_input == "1":
+                MAX_ATTEMPTS = int(input("The current Max Attempts is: " + str(MAX_ATTEMPTS) + ". What would you like it to be: "))
+                continue
+            elif command_input == "2":
+                print("Help command output is still a work in progress..")
+                continue
+            elif command_input == "3":
+                if cheats == True:
+                    cheats = False
+                elif cheats == False:
+                    cheats = True
+                continue
+            elif command_input == "4":
+                continue
+            elif command_input == "5":
+                exit()
+            else:
+                print("The entered input is invalid or out of scope")
+                continue
 
 
 start()
