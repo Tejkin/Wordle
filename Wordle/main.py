@@ -1,16 +1,12 @@
 import random
 
 # File Path
-# ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/all_words.txt"
-# TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Python - Wordle/Wordle/Wordle/word-bank/target_words.txt"
-ALL_WORDS_PATH = "/Users/thomas/Documents/GitHub/Wordle/Wordle/word-bank/all_words.txt"
-TARGET_WORDS_PATH = "/Users/thomas/Documents/GitHub/Wordle/Wordle/word-bank/target_words.txt"
+ALL_WORDS_PATH = "C:/Users/CHENTH/Documents/Python/Wordle/Wordle/word-bank/all_words.txt"
+TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Python/Wordle/Wordle/word-bank/target_words.txt"
+# ALL_WORDS_PATH = "/Users/thomas/Documents/GitHub/Wordle/Wordle/word-bank/all_words.txt"
+# TARGET_WORDS_PATH = "/Users/thomas/Documents/GitHub/Wordle/Wordle/word-bank/target_words.txt"
 
-# Lists holding keyboard letters and display
-keys1 = list("QWERTYUIOP")
-keys2 = list("ASDFGHJKL")
-keys3 = list("ZXCVBNM")
-display = list("_____")
+
 
 # Play the game
 def play():
@@ -110,10 +106,12 @@ def read_score(score, target_letter, guess_letter, display):
         if i == 0:
             colour = Colours.RED
             index = score.index(i)
-            score[index] = colour + "X" + Colours.END
+            score[index] = colour + guess_letter[index] + Colours.END
             keyboard(colour, guess_letter[index])
-    print(' '.join(score))
-    print(' '.join(display))
+    score = ' '.join(score)
+    print(score + "\n")
+    list_guess(score)
+    print("\t" + ' '.join(display) + "\n")
     print_keyboard()
     
 
@@ -173,6 +171,13 @@ def start():
     MAX_ATTEMPTS = 6
     global cheats
     cheats = False
+    # Global lists holding keyboard letters and display
+    global keys1, keys2, keys3, display, guess_list
+    keys1 = list("QWERTYUIOP")
+    keys2 = list("ASDFGHJKL")
+    keys3 = list("ZXCVBNM")
+    display = list("_____")
+    guess_list = ["\tGUESSES"]
     while True:
         command_input = input("Would you lke to play Wordle? Y/N: ")
         if command_input.upper() == "Y":
@@ -206,5 +211,9 @@ def play_again():
         start()
     else:
         exit()
+
+def list_guess(score):
+    guess_list.append(score)
+    print("\n\t".join(guess_list) + "\n")
 
 start()
