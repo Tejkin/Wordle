@@ -7,7 +7,6 @@ TARGET_WORDS_PATH = "C:/Users/CHENTH/Documents/Python/Wordle/Wordle/word-bank/ta
 # TARGET_WORDS_PATH = "/Users/thomas/Documents/GitHub/Wordle/Wordle/word-bank/target_words.txt"
 
 
-
 # Play the game
 def play():
     '''
@@ -262,7 +261,7 @@ def start():
                 MAX_ATTEMPTS = int(input("The current Max Attempts is: " + str(MAX_ATTEMPTS) + ". What would you like it to be: "))
                 continue
             elif command_input == "2":
-                print("Help command output is still a work in progress..")
+                wordle_help()
                 continue
             elif command_input == "3":
                 if cheats == True:
@@ -298,5 +297,7 @@ def list_guess(score):
     '''
     guess_list.append(score)
     print("\n\t".join(guess_list) + "\n")
+def wordle_help():
+    print("You are given " + Colours.GREEN + str(MAX_ATTEMPTS) + Colours.END + " chances to guess the correct 5 letter word, with some hints that will help you along the way\n1) Any correctly guessed letter, but in the wrong position will be coloured " + Colours.YELLOW + "YELLOW" + Colours.END + "\n2) Any correctly guessed letters in the right position will be coloured " + Colours.GREEN + "GREEN" + Colours.END + "\n3) Any incorrectly guessed letters will be coloured " + Colours.RED + "RED" + Colours.END + "\nFinally a keyboard with the corresponding coloured letters will be displayed for your convenience")
 
 start()
